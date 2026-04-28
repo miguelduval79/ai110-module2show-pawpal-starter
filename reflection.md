@@ -1,11 +1,40 @@
 # PawPal+ Project Reflection
 
+No major design changes were made. The initial class structure already aligned well with the requirements and responsibilities of the system.
+
+My initial design includes four main classes: Owner, Pet, Task, and Scheduler.
+
+Owner is responsible for managing pets and stores the owner’s name and a list of pets.
+
+Pet represents each animal and is responsible for managing its care tasks. It stores basic information such as name, species, age, and a list of tasks.
+
+Task represents individual activities such as feeding, walking, medication, or appointments. It stores details such as duration, priority, due time, and whether the task is recurring or completed.
+
+Scheduler is responsible for organizing and managing all tasks. It will handle sorting tasks by priority, detecting conflicts, and generating a daily schedule.
+
 ## 1. System Design
 
 **a. Initial design**
 
 - Briefly describe your initial UML design.
+
+1. Add a pet to the system and associate it with an owner.
+2. Create and schedule tasks such as feeding, walking, medication, or appointments.
+3. View and organize tasks for the day based on time or priority.
+
+
 - What classes did you include, and what responsibilities did you assign to each?
+My initial UML design includes four main classes: Owner, Pet, Task, and Scheduler.
+
+The Owner class represents the user of the system and is responsible for managing pets. It stores basic information such as the owner's name and a list of pets.
+
+The Pet class represents each individual animal and is responsible for managing its associated care tasks. It stores details such as the pet's name, species, and a list of tasks.
+
+The Task class represents individual activities such as feeding, walking, medication, or appointments. It stores information such as the task name, duration, priority, due time, and whether it is recurring.
+
+The Scheduler class is responsible for organizing and managing all tasks. It handles sorting tasks by priority, generating a daily schedule, and detecting conflicts between tasks.
+
+These classes work together to create a modular system where responsibilities are clearly separated and tasks can be efficiently managed and scheduled.
 
 **b. Design changes**
 
@@ -69,3 +98,68 @@
 **c. Key takeaway**
 
 - What is one important thing you learned about designing systems or working with AI on this project?
+
+## 6. Reflection
+🐶 Owner
+
+Attributes:
+
+* name
+* pets (list of Pet)
+
+Methods:
+
+* add_pet(pet)
+* get_pets()
+
+⸻
+
+🐾 Pet
+
+Attributes:
+
+* name
+* species
+* age
+* tasks (list of Task)
+
+Methods:
+
+* add_task(task)
+* get_tasks()
+
+⸻
+
+📋 Task
+
+Attributes:
+
+* title
+* task_type (feeding, walking, etc.)
+* duration
+* priority
+* due_time
+* recurring
+* completed
+
+Methods:
+
+* mark_complete()
+* update_task()
+
+⸻
+
+🧠 Scheduler
+
+Attributes:
+
+* tasks (list of Task)
+
+Methods:
+
+* add_task(task)
+* get_tasks_for_today()
+* sort_tasks_by_priority()
+* detect_conflicts()
+* generate_schedule()p
+
