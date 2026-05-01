@@ -21,19 +21,11 @@ for their pet(s) based on constraints like time, priority, and preferences.
 """
     )
 
-with st.expander("What this version does", expanded=True):
-    st.markdown(
-        """
-- Creates an owner
-- Creates a pet
-- Adds real `Task` objects
-- Stores data using `st.session_state`
-- Calls your `Scheduler` to generate a schedule
-"""
-    )
-
 st.divider()
 
+# ----------------------------
+# OWNER + PET SETUP
+# ----------------------------
 st.subheader("Owner + Pet Info")
 
 owner_name = st.text_input("Owner name", value="Jordan")
@@ -58,6 +50,9 @@ if st.button("Update Owner/Pet"):
 
 st.divider()
 
+# ----------------------------
+# TASK CREATION
+# ----------------------------
 st.subheader("Tasks")
 
 col1, col2, col3 = st.columns(3)
@@ -96,16 +91,19 @@ if st.button("Add task"):
     st.session_state.pet.add_task(new_task)
     st.success(f"Task added: {task_title}")
 
+# ----------------------------
+# SHOW TASKS
+# ----------------------------
 if st.session_state.pet.tasks:
     st.write("Current tasks:")
 
     task_rows = [
         {
-            "title": task.title,
-            "duration_minutes": task.duration,
-            "priority": task.priority,
-            "due_time": task.due_time,
-            "completed": task.completed,
+            "Title": task.title,
+            "Time": task.due_time,
+            "Duration": task.duration,
+            "Priority": task.priority,
+            "Status": "Done" if task.completed else "Pending",
         }
         for task in st.session_state.pet.tasks
     ]
@@ -116,6 +114,9 @@ else:
 
 st.divider()
 
+# ----------------------------
+# SCHEDULER OUTPUT
+# ----------------------------
 st.subheader("Build Schedule")
 
 if st.button("Generate schedule"):
@@ -124,22 +125,37 @@ if st.button("Generate schedule"):
     if schedule:
         st.success("Schedule generated!")
 
+        # 🔥 NEW: conflict detection
+        conflicts = st.session_state.scheduler.detect_conflicts(schedule)
+
+        if conflicts:
+            st.warning("⚠️ Scheduling conflicts detected:")
+            for conflict in conflicts:
+                st.write(conflict)
+        else:
+            st.success("No scheduling conflicts detected.")
+
+        # display schedule
         schedule_rows = [
             {
-                "time": task.due_time,
-                "pet": pet_name,
-                "task": task.title,
-                "duration_minutes": task.duration,
-                "priority": task.priority,
-                "status": "Done" if task.completed else "Pending",
+                "Time": task.due_time,
+                "Pet": pet_name,
+                "Task": task.title,
+                "Duration": task.duration,
+                "Priority": task.priority,
+                "Status": "Done" if task.completed else "Pending",
             }
             for pet_name, task in schedule
         ]
 
         st.table(schedule_rows)
+
     else:
         st.info("No tasks available to schedule.")
 
+# ----------------------------
+# CLEAR
+# ----------------------------
 if st.button("Clear all tasks"):
     st.session_state.pet.tasks = []
     st.success("Tasks cleared.")

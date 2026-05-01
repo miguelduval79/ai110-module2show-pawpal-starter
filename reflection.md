@@ -163,3 +163,19 @@ Methods:
 * detect_conflicts()
 * generate_schedule()p
 
+## AI Strategy Reflection
+
+I used AI as a design and debugging partner, but I kept control of decisions.
+
+Most useful:
+- breaking system into Owner, Pet, Task, Scheduler
+- generating and refining algorithms
+
+Example I rejected:
+- overly complex scheduling suggestions; I kept simple time-based logic for clarity
+
+Using separate phases helped me stay organized:
+- design → backend → tests → UI → algorithms
+
+Main lesson:
+Being the lead architect means validating AI output, not blindly accepting it.
